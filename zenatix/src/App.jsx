@@ -1,6 +1,5 @@
-// import logo from './logo.svg';
 import { useEffect } from 'react';
-// import axios from "axios";
+import PokemonThumb from './components/PokemonThumb'
 import './App.css';
 import { useState } from 'react';
 
@@ -32,7 +31,14 @@ function App() {
   return (
     <div className="App">
       <h1>POKEMON</h1>
-      <input type="search" onChange={(e)=>{createPokemonObject(data.results)}}/>
+      <div>
+      <input type="search"/>
+      <select name="" id="">
+        <option value="">normal</option>
+        <option value="">regular</option>
+      </select>
+      </div>
+      <div className='Pokemon'>
       {allPokemons.map( (pokemonStats, index) => 
             <PokemonThumb
               key={index}
@@ -41,7 +47,10 @@ function App() {
               name={pokemonStats.name}
               type={pokemonStats.types[0].type.name}
             />)}
+      </div>
+      <div>
       <button className="load-more" onClick={() => getAllPokemons()}>Load more</button>
+      </div>
     </div>
   );
 }
