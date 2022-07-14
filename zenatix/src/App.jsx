@@ -6,6 +6,7 @@ import PokemonThumb from "./components/PokemonThumb";
 import Pagination from "./components/Pagination";
 function App() {
   const [allPokemons1, setAllPokemons1] = useState([]);
+  const [search, setSearch] = useState([]);
   const [currentPageUrl, setCurrentPageUrl] = useState(
     "https://pokeapi.co/api/v2/pokemon"
   );
@@ -29,21 +30,30 @@ function App() {
       setPrevious(data.previous)
       function createPokemonObject(results) {
       // console.log("results",results)
-      results.map(async (pokemon) => {
+      results.forEach(async (pokemon) => {
         const res = await fetch(
           `https://pokeapi.co/api/v2/pokemon/${pokemon.name}`
         );
         const data = await res.json();
         setAllPokemons1( e=>[...e,data]);
-        // await allPokemons1.sort((a, b) => a.id - b.id);
+        await allPokemons1.sort((a, b) => a.id - b.id);
       });
     }
     // console.log(allPokemons1);
     createPokemonObject(data.results);
   });
-
+  handleSearch()
     return () => cancel()
   }, [currentPageUrl]);
+
+    const handleSearch=async(e)=>{
+      const res = await fetch(
+        `https://pokeapi.co/api/v2/pokemon/${e}`
+      );
+      const data = await res.json();
+      console.log(data);
+      setSearch(data);
+    }
 
   function gotoNextPage() {
     setCurrentPageUrl(loadMore);
@@ -57,7 +67,7 @@ function App() {
     <div className="App">
       <h1>POKEMON</h1>
       <div>
-        <input type="search" />
+        <input type="search" onChange={(e)=>{handleSearch(e.target.value)}}/>
         <select name="" id="" onChange={(e) => handleFilter(e.target.value)}>
           <option value="">Type:filter</option>
           <option value="normal">normal</option>
