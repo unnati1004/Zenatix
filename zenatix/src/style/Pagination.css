@@ -1,0 +1,4 @@
+.paginate{
+        display: flex;
+        justify-content: space-between;
+}
