@@ -7,6 +7,13 @@ function App() {
   const[allPokemons, setAllPokemons] = useState([])
    const [loadMore, setLoadMore] = useState('https://pokeapi.co/api/v2/pokemon?limit=20')
 
+   const handleFilter=(v)=>{
+    // console.log(v);
+    const data = allPokemons.filter((e)=>{
+      return e.types[0].type.name === v
+    })
+    console.log(data);
+   }
   const getAllPokemons = async () => {
     const res = await fetch(loadMore)
     const data = await res.json()
@@ -33,9 +40,13 @@ function App() {
       <h1>POKEMON</h1>
       <div>
       <input type="search"/>
-      <select name="" id="">
-        <option value="">normal</option>
-        <option value="">regular</option>
+      <select name="" id="" onClick={(e)=>handleFilter(e.target.value)}>
+        <option value="">Type:filter</option>
+        <option value="normal">normal</option>
+        <option value="regular">regular</option>
+        <option value="fire">fire</option>
+        <option value="grass">grass</option>
+        <option value="water">water</option>
       </select>
       </div>
       <div className='Pokemon'>
